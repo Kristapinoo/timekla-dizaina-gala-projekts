@@ -1,0 +1,1 @@
+# timekla-dizaina-gala-projekts
