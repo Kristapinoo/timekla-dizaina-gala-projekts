@@ -1,0 +1,525 @@
+/* ==========================================================================
+   Viena darba nedēļa Datorikas nodaļas studenta dzīvē
+   Autors: Kristaps Kostukevičs
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@400;500;600&display=swap');
+
+/* ── Krāsas: gaišais režīms ── */
+:root {
+  --bg:       #F8FAFC;
+  --surface:  #E2E4E9;
+  --text:     #1E293B;
+  --text-2:   #475569;
+  --text-3:   #64748B;
+  --border:   #CBD5E1;
+  --maxw:     1100px;
+}
+
+/* ── Krāsas: tumšais režīms ── */
+[data-theme="dark"] {
+  --bg:       #0B0F19;
+  --surface:  #1F2937;
+  --text:     #E2E8F0;
+  --text-2:   #94A3B8;
+  --text-3:   #64748B;
+  --border:   #2D3748;
+}
+
+/* ── Pamats ── */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.75;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.25;
+  color: var(--text);
+  margin: 0;
+}
+
+h1 { font-size: 36px; }
+h2 { font-size: 28px; }
+h3 { font-size: 22px; }
+
+p { margin: 0 0 1rem; color: var(--text-2); }
+
+a { color: var(--text); text-underline-offset: 3px; }
+a:hover { opacity: 0.7; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+.container {
+  width: 100%;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+/* Pieejamība */
+.skip-link {
+  position: absolute; left: -999px; top: 0;
+  background: var(--text); color: var(--bg);
+  padding: 0.6rem 1rem; z-index: 999; border-radius: 0 0 6px 0;
+  font-family: 'Inter', sans-serif;
+}
+.skip-link:focus { left: 0; }
+
+a:focus-visible, button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   NAVIGĀCIJA
+   ========================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--bg);
+  border-bottom: 1px solid var(--border);
+}
+
+.nav {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0.6rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex: 1;
+}
+
+.nav-links a {
+  display: inline-block;
+  padding: 0.4rem 0.8rem;
+  border-radius: 7px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+  color: var(--text-2);
+  transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--text); opacity: 1; }
+
+.nav-links a[aria-current="page"] {
+  background: var(--text);
+  color: var(--bg);
+}
+
+/* Tumšā/gaišā režīma poga */
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s;
+}
+.theme-toggle:hover { background: var(--surface); opacity: 1; }
+.theme-toggle svg { width: 18px; height: 18px; }
+
+.icon-moon { display: none; }
+[data-theme="dark"] .icon-sun  { display: none; }
+[data-theme="dark"] .icon-moon { display: block; }
+
+/* Hamburger (mobilā) */
+.nav-toggle {
+  display: none;
+  width: 38px; height: 38px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  border-radius: 8px;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.nav-toggle svg { width: 20px; height: 20px; }
+
+/* ==========================================================================
+   ATTĒLU VIETASTURA
+   ========================================================================== */
+
+.img-slot {
+  margin: 0;
+  background: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Rāmītis "attēls šeit" */
+.img-slot::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom right,
+      transparent calc(50% - 0.5px),
+      var(--border) calc(50% - 0.5px),
+      var(--border) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)),
+    linear-gradient(to top right,
+      transparent calc(50% - 0.5px),
+      var(--border) calc(50% - 0.5px),
+      var(--border) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px));
+  pointer-events: none;
+}
+
+/* Ja attēls ir ievietots — paslēpj rāmīti */
+.img-slot img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ==========================================================================
+   SĀKUMLAPA — HERO
+   ========================================================================== */
+
+.hero {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.hero .img-slot {
+  width: 100%;
+  aspect-ratio: 2 / 1;
+  border-radius: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  z-index: 2;
+}
+
+.hero-overlay h1 {
+  font-size: clamp(28px, 4vw, 48px);
+  max-width: 16ch;
+  line-height: 1.2;
+}
+
+.hero-overlay p {
+  font-size: 1rem;
+  color: var(--text-2);
+  max-width: 42ch;
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   SĀKUMLAPA — SATURS
+   ========================================================================== */
+
+.page-section {
+  padding: 3rem 0;
+}
+
+.section-title {
+  margin-bottom: 0.5rem;
+}
+
+.section-body {
+  max-width: 680px;
+  margin-top: 1rem;
+}
+
+/* Dienu saraksts navigācijai */
+.day-list {
+  list-style: none;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.day-list li a {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 500;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.day-list li a:hover { opacity: 0.7; }
+
+.day-list .day-num {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  min-width: 140px;
+  flex-shrink: 0;
+}
+
+.day-list .day-name { color: var(--text); }
+.day-list .day-desc { color: var(--text-3); font-size: 0.9rem; }
+
+/* Par autoru (sākumlapa) */
+.author-note {
+  padding: 2rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.author-note p {
+  margin: 0;
+  color: var(--text-3);
+  font-size: 0.9rem;
+}
+
+.author-note strong { color: var(--text); }
+
+/* ==========================================================================
+   DIENAS LAPAS (Pirmdiena … Piektdiena)
+   ========================================================================== */
+
+.page-header {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.page-label {
+  display: block;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-bottom: 0.5rem;
+}
+
+.page-header h1 { margin-top: 0.25rem; }
+
+.page-body {
+  padding: 2.5rem 0 3rem;
+}
+
+/* Divi attēli blakus */
+.images-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.images-row .img-slot {
+  aspect-ratio: 1 / 1;
+}
+
+/* Raksta teksts */
+.article-text { max-width: 720px; }
+
+.article-text p:first-child { color: var(--text); }
+
+.article-text strong { color: var(--text); }
+
+.article-text a {
+  font-weight: 500;
+  text-decoration: underline;
+}
+
+/* Faktu bloks */
+.fact-box {
+  background: var(--surface);
+  border-left: 3px solid var(--text);
+  border-radius: 0 8px 8px 0;
+  padding: 1rem 1.25rem;
+  margin: 1.75rem 0;
+}
+
+.fact-box h3 {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.fact-box ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.fact-box li {
+  color: var(--text-2);
+  margin-bottom: 0.3rem;
+  font-size: 0.95rem;
+}
+
+/* Pārvietošanās starp lapām */
+.pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--border);
+  padding-top: 1.75rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.pager-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: transparent;
+  max-width: 48%;
+  transition: border-color 0.15s;
+}
+
+.pager-link:hover { border-color: var(--text); opacity: 1; }
+
+.pager-link.next { text-align: right; margin-left: auto; }
+
+.pager-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-3);
+}
+
+.pager-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+/* ==========================================================================
+   KĀJENE
+   ========================================================================== */
+
+.site-footer {
+  border-top: 1px solid var(--border);
+  background: var(--bg);
+  padding: 1.5rem 0;
+  margin-top: 1rem;
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-copy {
+  font-size: 0.85rem;
+  color: var(--text-3);
+}
+
+.social-icons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.social-icons a {
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-2);
+  border-radius: 6px;
+  text-decoration: none;
+  transition: color 0.15s, background 0.15s;
+}
+
+.social-icons a:hover { color: var(--text); background: var(--surface); opacity: 1; }
+
+.social-icons svg { width: 18px; height: 18px; }
+
+/* ==========================================================================
+   RESPONSĪVUMS
+   ========================================================================== */
+
+@media (max-width: 860px) {
+  .nav-links {
+    position: fixed;
+    inset: 56px 0 auto 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 0.5rem 1rem 1rem;
+    transform: translateY(-110%);
+    transition: transform 0.25s ease;
+    z-index: 99;
+  }
+  .nav-links.open { transform: translateY(0); }
+  .nav-links a { padding: 0.7rem 0.9rem; }
+  .nav-toggle { display: inline-flex; }
+
+  .hero .img-slot { aspect-ratio: 4 / 3; }
+}
+
+@media (max-width: 600px) {
+  .container { padding: 0 1rem; }
+  .nav { padding: 0.6rem 1rem; }
+
+  .images-row { grid-template-columns: 1fr; }
+
+  .pager-link { max-width: 100%; }
+  .pager { flex-direction: column; }
+  .pager-link.next { margin-left: 0; text-align: left; }
+
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+    scroll-behavior: auto !important;
+  }
+}
