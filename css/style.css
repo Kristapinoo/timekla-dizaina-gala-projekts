@@ -179,26 +179,8 @@ a:focus-visible, button:focus-visible {
   position: relative;
 }
 
-/* Rāmītis "attēls šeit" */
-.img-slot::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom right,
-      transparent calc(50% - 0.5px),
-      var(--border) calc(50% - 0.5px),
-      var(--border) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)),
-    linear-gradient(to top right,
-      transparent calc(50% - 0.5px),
-      var(--border) calc(50% - 0.5px),
-      var(--border) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px));
-  pointer-events: none;
-}
 
-/* Ja attēls ir ievietots — paslēpj rāmīti */
+/* Ja attēls ir ievietots — aizpilda slotu */
 .img-slot img {
   position: relative;
   z-index: 1;
@@ -234,12 +216,18 @@ a:focus-visible, button:focus-visible {
   text-align: center;
   padding: 2rem;
   z-index: 2;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+[data-theme="dark"] .hero-overlay {
+  background: rgba(0, 0, 0, 0.55);
 }
 
 .hero-overlay h1 {
   font-size: clamp(28px, 4vw, 48px);
   max-width: 16ch;
   line-height: 1.2;
+  color: var(--text);
 }
 
 .hero-overlay p {
@@ -357,7 +345,7 @@ a:focus-visible, button:focus-visible {
 /* Raksta teksts */
 .article-text { max-width: 720px; }
 
-.article-text p:first-child { color: var(--text); }
+.article-text p { color: var(--text-2); }
 
 .article-text strong { color: var(--text); }
 
