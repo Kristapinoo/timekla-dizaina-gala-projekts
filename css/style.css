@@ -39,6 +39,7 @@ body {
   background: var(--bg);
   color: var(--text);
   transition: background 0.25s ease, color 0.25s ease;
+  overflow-x: hidden;
 }
 
 h1, h2, h3 {
@@ -473,19 +474,28 @@ a:focus-visible, button:focus-visible {
 
 @media (max-width: 860px) {
   .nav-links {
-    position: fixed;
-    inset: 56px 0 auto 0;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
     flex-direction: column;
     align-items: stretch;
     gap: 0;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
     padding: 0.5rem 1rem 1rem;
-    transform: translateY(-110%);
-    transition: transform 0.25s ease;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-4px);
+    transition: transform 0.2s ease, opacity 0.2s ease, visibility 0s linear 0.2s;
     z-index: 99;
   }
-  .nav-links.open { transform: translateY(0); }
+  .nav-links.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    transition: transform 0.2s ease, opacity 0.2s ease, visibility 0s;
+  }
   .nav-links a { padding: 0.7rem 0.9rem; }
   .nav-toggle { display: inline-flex; }
 
@@ -503,6 +513,14 @@ a:focus-visible, button:focus-visible {
   .pager-link.next { margin-left: 0; text-align: left; }
 
   .footer-inner { flex-direction: column; align-items: flex-start; }
+
+  .day-list li a {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.1rem;
+  }
+
+  .day-list .day-num { min-width: unset; }
 }
 
 @media (prefers-reduced-motion: reduce) {

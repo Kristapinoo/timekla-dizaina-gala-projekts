@@ -75,6 +75,17 @@
           navToggle.setAttribute("aria-expanded", "false");
         }
       });
+      /* aizver izvēlni, klikšķinot ārpus tās */
+      document.addEventListener("click", function (ev) {
+        if (
+          navLinks.classList.contains("open") &&
+          !navLinks.contains(ev.target) &&
+          !navToggle.contains(ev.target)
+        ) {
+          navLinks.classList.remove("open");
+          navToggle.setAttribute("aria-expanded", "false");
+        }
+      });
     }
   });
 })();
