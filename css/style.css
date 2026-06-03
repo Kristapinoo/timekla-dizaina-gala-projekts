@@ -10,9 +10,9 @@
   --bg:       #F8FAFC;
   --surface:  #E2E4E9;
   --text:     #1E293B;
-  --text-2:   #475569;
-  --text-3:   #64748B;
-  --border:   #CBD5E1;
+  --text-2:   #545D6B;
+  --text-3:   #808792;
+  --border:   #E2E4E9;
   --maxw:     1100px;
 }
 
@@ -21,9 +21,9 @@
   --bg:       #0B0F19;
   --surface:  #1F2937;
   --text:     #E2E8F0;
-  --text-2:   #94A3B8;
-  --text-3:   #64748B;
-  --border:   #2D3748;
+  --text-2:   #8C919A;
+  --text-3:   #767C84;
+  --border:   #1F2937;
 }
 
 /* ── Pamats ── */
